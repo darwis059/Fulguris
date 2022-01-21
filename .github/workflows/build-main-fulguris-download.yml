@@ -1,10 +1,23 @@
 name: Build Fulguris Download
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'App release version'
+        type: string
+        required: true
+        default: "v1.8.6"
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+    secrets:
+      ANDROID_KEYSTORE:
+        required: true
+      ANDROID_KEYSTORE_PASSWORD:
+        required: true
 
 jobs:
   build:
@@ -18,8 +31,65 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build Slions download variants
       run: ./gradlew assembleSlionsFullDownload
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+    - name: Sign Android APK 1
+      run: |
+        echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -d > keystore.jks
+          /usr/local/lib/android/sdk/build-tools/30.0.3/apksigner sign \
+            --ks keystore.jks --ks-pass "pass:${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
+            --in "app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-arm64-v8a-release-unsigned.apk" \
+            --out "app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-arm64-v8a-release-signed.apk"
+    - name: Sign Android APK 2
+      run: |
+        echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -d > keystore.jks
+          /usr/local/lib/android/sdk/build-tools/30.0.3/apksigner sign \
+            --ks keystore.jks --ks-pass "pass:${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
+            --in "app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-x86_64-release-unsigned.apk" \
+            --out "app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-x86_64-release-signed.apk"
+    - name: Sign Android APK 3
+      run: |
+        echo ${{ secrets.ANDROID_KEYSTORE }} | base64 -d > keystore.jks
+          /usr/local/lib/android/sdk/build-tools/30.0.3/apksigner sign \
+            --ks keystore.jks --ks-pass "pass:${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
+            --in "app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-universal-release-unsigned.apk" \
+            --out "app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-universal-release-signed.apk"
+#     - name: Android Sign
+#       # You may pin to the exact commit or the version.
+#       # uses: Tlaster/android-sign@1c5bf4b2fa309acb0c0ae0bf9379ab458f14d5b1
+#       uses: Tlaster/android-sign@v1.2.2
+#       with:
+#         # The directory to find your release to sign
+#         releaseDirectory: app/build/outputs/apk/slionsFullDownload/release/
+#         # The key used to sign your release in base64 encoded format
+#         signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE }}
+#         # The key alias
+#         alias: darwis
+#         # The password to the keystore
+#         keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+#         # The password for the key
+#         keyPassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+#         # The working directory for action, default to build
+#         buildDirectory: app/build/outputs/apk/slionsFullDownload/release/
+#         # The output directory for sign, default to build/signed
+#         output: app/build/outputs/apk/slionsFullDownload/release/
+        
+    - name: Upload APK x86_64
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: Fulguris-${{ inputs.version }}-slions-full-download-x86_64-release-signed.apk
+        path: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-x86_64-release-signed.apk
+    - name: Upload APK arm64-v8a
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: Fulguris-${{ inputs.version }}-slions-full-download-arm64-v8a-release-signed.apk
+        path: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-arm64-v8a-release-signed.apk
+    - name: Upload APK universal
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: Fulguris-${{ inputs.version }}-slions-full-download-universal-release-signed.apk
+        path: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ inputs.version }}-slions-full-download-universal-release-signed.apk

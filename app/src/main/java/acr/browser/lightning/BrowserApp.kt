@@ -15,8 +15,12 @@ import acr.browser.lightning.utils.installMultiDex
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
+import android.view.WindowManager
 import android.webkit.WebView
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -128,11 +132,41 @@ class BrowserApp : Application() {
             // Track current activity
             override fun onActivityResumed(activity: Activity) {
                 resumedActivity = activity
+//                activity.callingPackage?.let { logger.log(TAG, it) }
+//                logger.log(TAG, activity.intent.toUri(Intent.URI_INTENT_SCHEME))
+//                StringBuilder().apply {
+//                    append("Action: ${activity.intent.action}\n")
+//                    append("URI: ${activity.intent.toUri(Intent.URI_INTENT_SCHEME)}\n")
+//                    toString().also { log ->
+//                        logger.log(TAG, log)
+//                    }
+//                }
+//                val intent = activity.intent
+//                Log.d(TAG, intent?.getStringExtra("blank") ?: "no intent")
+
+                logger.log(TAG, activity.localClassName)
+                if (activity.localClassName == "acr.browser.lightning.MainActivity" && prevAct != "acr.browser.lightning.Blank") {
+                    activity.startActivity(Intent(activity.applicationContext, Blank::class.java))
+                }
             }
+
+
 
             // Track current activity
             override fun onActivityPaused(activity: Activity) {
+//                activity.finishAndRemoveTask()
                 resumedActivity = null
+//                logger.log(TAG, activity.intent.toUri(Intent.URI_INTENT_SCHEME))
+//                if (activity.localClassName != "acr.browser.lightning.Blank") {
+//                if (activity.localClassName == "acr.browser.lightning.MainActivity" && prevAct != "acr.browser.lightning.MainActivity") {
+//                    activity.startActivity(Intent(activity.applicationContext, Blank::class.java))
+//                }
+                prevAct = activity.localClassName
+            }
+
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+                activity.intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
             }
         })
     }
@@ -143,6 +177,7 @@ class BrowserApp : Application() {
         lateinit var instance: BrowserApp
         // Used to track current activity
         var resumedActivity: Activity? = null
+        var prevAct: String? = null
 
         /**
          * Used to get current activity context in order to access current theme.

@@ -48,6 +48,7 @@
 
     <queries>
         <intent>
+
             <!-- Needed to be able to launch third party applications -->
             <action android:name="android.intent.action.MAIN" />
         </intent>
@@ -58,13 +59,14 @@
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="false"
+        android:roundIcon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
 
         <!-- Splash screen activity not sure exactly if we need MAIN and DEFAULT intent TBH -->
-        <!-- Make it resizable for Multi-Window mode support, such as Samsung Dex
+        <!--
+ Make it resizable for Multi-Window mode support, such as Samsung Dex
         Needed to be in the root activity which is our splash screen apparently.
         -->
         <activity android:name=".SplashActivity"
@@ -86,91 +88,101 @@
             android:value="2.1" />
 
         <activity
+            android:name=".Blank"
+            android:excludeFromRecents="true"
+            android:autoRemoveFromRecents="true"
+            android:clearTaskOnLaunch="true"
+            android:exported="true"
+            android:theme="@style/Theme.App.DayNight" >
+        </activity>
+
+        <activity
             android:name=".MainActivity"
-            android:alwaysRetainTaskState="true"
-            android:clearTaskOnLaunch="false"
             android:colorMode="wideColorGamut"
-            android:resizeableActivity="true"
             android:configChanges="locale|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
+            android:excludeFromRecents="true"
+            android:autoRemoveFromRecents="true"
+            android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:resizeableActivity="true"
             android:theme="@style/Theme.App.DayNight"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.APP_BROWSER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            android:windowSoftInputMode="stateHidden|adjustResize">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <category android:name="android.intent.category.APP_BROWSER" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <data android:scheme="file" />
-                <data android:mimeType="text/html" />
-                <data android:mimeType="text/plain" />
-                <data android:mimeType="application/xhtml+xml" />
-                <data android:mimeType="application/vnd.wap.xhtml+xml" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+<!--                <data android:scheme="file" />-->
+<!--                <data android:mimeType="text/html" />-->
+<!--                <data android:mimeType="text/plain" />-->
+<!--                <data android:mimeType="application/xhtml+xml" />-->
+<!--                <data android:mimeType="application/vnd.wap.xhtml+xml" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:scheme="about" />
-                <data android:scheme="fulguris" />
-                <data android:scheme="javascript" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+
+<!--                <data android:scheme="http" />-->
+<!--                <data android:scheme="https" />-->
+<!--                <data android:scheme="about" />-->
+<!--                <data android:scheme="fulguris" />-->
+<!--                <data android:scheme="javascript" />-->
+<!--            </intent-filter>-->
             <!--
                   For these schemes where any of these particular MIME types
                   have been supplied, we are a good candidate.
             -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
 
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:scheme="inline" />
-                <data android:mimeType="text/html" />
-                <data android:mimeType="text/plain" />
-                <data android:mimeType="application/xhtml+xml" />
-                <data android:mimeType="application/vnd.wap.xhtml+xml" />
-            </intent-filter>
+<!--                <data android:scheme="http" />-->
+<!--                <data android:scheme="https" />-->
+<!--                <data android:scheme="inline" />-->
+<!--                <data android:mimeType="text/html" />-->
+<!--                <data android:mimeType="text/plain" />-->
+<!--                <data android:mimeType="application/xhtml+xml" />-->
+<!--                <data android:mimeType="application/vnd.wap.xhtml+xml" />-->
+<!--            </intent-filter>-->
             <!-- For viewing saved web archives. -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
 
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:scheme="file" />
-                <data android:mimeType="application/x-webarchive-xml" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.WEB_SEARCH" />
+<!--                <data android:scheme="http" />-->
+<!--                <data android:scheme="https" />-->
+<!--                <data android:scheme="file" />-->
+<!--                <data android:mimeType="application/x-webarchive-xml" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.WEB_SEARCH" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
 
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.WEB_SEARCH" />
+<!--                <data android:scheme="http" />-->
+<!--                <data android:scheme="https" />-->
+<!--            </intent-filter>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.WEB_SEARCH" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--            </intent-filter>-->
             <intent-filter>
                 <action android:name="info.guardianproject.panic.action.TRIGGER" />
 
@@ -181,26 +193,27 @@
             For Fulguris to show up in Android Sharesheet.
             See: https://developer.android.com/training/sharing/receive
             We will accept text to put it in the address bar.
-             -->
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
+            -->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.SEND" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- <data android:mimeType="text/plain" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
         <activity
             android:name=".IncognitoActivity"
-            android:alwaysRetainTaskState="true"
             android:colorMode="wideColorGamut"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
+            android:excludeFromRecents="true"
+            android:autoRemoveFromRecents="true"
+            android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:parentActivityName=".MainActivity"
             android:process=":incognito"
             android:theme="@style/Theme.App.DayNight"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:exported="true">
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.INCOGNITO" />
 
@@ -210,10 +223,12 @@
         <activity
             android:name=".settings.activity.SettingsActivity"
             android:colorMode="wideColorGamut"
+            android:excludeFromRecents="true"
+            android:autoRemoveFromRecents="true"
+            android:exported="true"
             android:label="@string/settings"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.App.DayNight"
-            android:exported="true">
+            android:theme="@style/Theme.App.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.SETTINGS" />
 
@@ -223,9 +238,11 @@
         <activity
             android:name=".reading.ReadingActivity"
             android:colorMode="wideColorGamut"
+            android:excludeFromRecents="true"
+            android:autoRemoveFromRecents="true"
+            android:exported="false"
             android:label="@string/reading_mode"
-            android:theme="@style/Theme.App.DayNight"
-            android:exported="false">
+            android:theme="@style/Theme.App.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.READING" />
 
@@ -241,12 +258,9 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
-        </provider>
-
-        <!-- Firebase configuration -->
-        <meta-data android:name="firebase_analytics_collection_enabled" android:value="@bool/pref_default_analytics" />
-        <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="@bool/pref_default_crash_report" />
-
+        </provider> <!-- Firebase configuration -->
+        <!-- <meta-data android:name="firebase_analytics_collection_enabled" android:value="@bool/pref_default_analytics" /> -->
+        <!-- <meta-data android:name="firebase_crashlytics_collection_enabled" android:value="@bool/pref_default_crash_report" /> -->
         <!-- We won't need this for now. We experimented with that as we were trying to open file explorer to a directory. -->
         <!--
         <provider
@@ -259,7 +273,15 @@
                 android:resource="@xml/provider_paths" />
         </provider>
         -->
-
+        <receiver
+            android:name=".ScreenActionReceiver"
+            android:exported="true">
+            <intent-filter android:priority="90000">
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- <action android:name="android.intent.action.SCREEN_OFF" /> -->
+                <!-- <action android:name="android.intent.action.SCREEN_ON" /> -->
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

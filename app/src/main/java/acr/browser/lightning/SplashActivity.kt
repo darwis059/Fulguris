@@ -22,16 +22,13 @@
  
 package acr.browser.lightning
 
-import acr.browser.lightning.browser.activity.ThemedBrowserActivity
 import acr.browser.lightning.locale.LocaleAwareActivity
-import acr.browser.lightning.settings.preferences.UserPreferences
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Still needed a splash screen activity as the SplashScreen API would not play well with our themed activity.
@@ -44,6 +41,8 @@ class SplashActivity @Inject constructor(): LocaleAwareActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         // Setup our splash screen
         // See: https://developer.android.com/guide/topics/ui/splash-screen
@@ -65,7 +64,7 @@ class SplashActivity @Inject constructor(): LocaleAwareActivity() {
             // Just start our main activity now for fastest loading
             // TODO: check if we need onboarding
             // Launch main activity
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, Blank::class.java).addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             //
             finish()

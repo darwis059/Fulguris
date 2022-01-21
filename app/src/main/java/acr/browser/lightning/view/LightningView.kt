@@ -5,9 +5,7 @@
 
 package acr.browser.lightning.view
 
-import acr.browser.lightning.Capabilities
-import acr.browser.lightning.R
-import acr.browser.lightning.ThemedActivity
+import acr.browser.lightning.*
 import acr.browser.lightning.browser.TabModel
 import acr.browser.lightning.constant.*
 import acr.browser.lightning.controller.UIController
@@ -15,7 +13,6 @@ import acr.browser.lightning.di.*
 import acr.browser.lightning.dialog.LightningDialogBuilder
 import acr.browser.lightning.download.LightningDownloadListener
 import acr.browser.lightning.extensions.*
-import acr.browser.lightning.isSupported
 import acr.browser.lightning.log.Logger
 import acr.browser.lightning.network.NetworkConnectivityModel
 import acr.browser.lightning.settings.preferences.UserPreferences
@@ -388,6 +385,7 @@ class LightningView(
 
             initializeSettings()
         }
+        webView?.addJavascriptInterface(WebAppInterface(activity.applicationContext), "Android");
 
         initializePreferences()
 

@@ -1,10 +1,12 @@
 name: Build Fulguris Google Play
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      build-target:
+        description: 'Build Target ("nightly"/"beta"/"non-release")'
+        type: string
+        default: "beta"
 
 jobs:
   build:
@@ -23,3 +25,8 @@ jobs:
       run: chmod +x gradlew
     - name: Build Slions Google Play variants
       run: ./gradlew assembleSlionsFullPlaystore
+    - name: Upload APK
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        name: app
+        path: app/build/outputs/apk/**/*.apk
