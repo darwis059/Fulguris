@@ -30,7 +30,7 @@ jobs:
 
     steps:
     - name: Telegram Notify
-      uses: appleboy/telegram-action@0.0.3
+      uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
@@ -104,7 +104,7 @@ jobs:
         name: Fulguris-${{ github.event.inputs.version }}-slions-full-download-universal-release-signed.apk
         path: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ github.event.inputs.version }}-slions-full-download-universal-release-signed.apk
     - name: Telegram Notify
-      uses: appleboy/telegram-action@0.0.3
+      uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
