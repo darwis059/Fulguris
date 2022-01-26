@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#00FFFFFF"
     tools:context=".Blank">
-
+    textView
     <Button
         android:id="@+id/btnStart"
         android:layout_width="wrap_content"
