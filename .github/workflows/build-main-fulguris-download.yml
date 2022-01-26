@@ -18,6 +18,10 @@ on:
         required: true
       ANDROID_KEYSTORE_PASSWORD:
         required: true
+      TELEGRAM_TO:
+        required: true
+      TELEGRAM_TOKEN:
+        required: true
 
 jobs:
   build:
@@ -25,6 +29,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Telegram Notify
+      uses: appleboy/telegram-action@0.0.3
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: Build Started
     - uses: actions/checkout@v2
     - name: set up JDK 11
       uses: actions/setup-java@v2
@@ -77,13 +87,6 @@ jobs:
 #         buildDirectory: app/build/outputs/apk/slionsFullDownload/release/
 #         # The output directory for sign, default to build/signed
 #         output: app/build/outputs/apk/slionsFullDownload/release/
-    - name: Telegram Notify
-      uses: appleboy/telegram-action@0.0.3
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: Build Complete
-        document: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ github.event.inputs.version }}-slions-full-download-arm64-v8a-release-signed.apk
         
     - name: Upload APK x86_64
       uses: actions/upload-artifact@v2.3.1
@@ -100,3 +103,10 @@ jobs:
       with:
         name: Fulguris-${{ github.event.inputs.version }}-slions-full-download-universal-release-signed.apk
         path: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ github.event.inputs.version }}-slions-full-download-universal-release-signed.apk
+    - name: Telegram Notify
+      uses: appleboy/telegram-action@0.0.3
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: Build Complete
+#         document: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ github.event.inputs.version }}-slions-full-download-arm64-v8a-release-signed.apk
