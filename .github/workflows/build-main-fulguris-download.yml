@@ -77,6 +77,13 @@ jobs:
 #         buildDirectory: app/build/outputs/apk/slionsFullDownload/release/
 #         # The output directory for sign, default to build/signed
 #         output: app/build/outputs/apk/slionsFullDownload/release/
+    - name: Telegram Notify
+      uses: appleboy/telegram-action@0.0.3
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: Build Complete
+        document: app/build/outputs/apk/slionsFullDownload/release/Fulguris-${{ github.event.inputs.version }}-slions-full-download-arm64-v8a-release-signed.apk
         
     - name: Upload APK x86_64
       uses: actions/upload-artifact@v2.3.1
