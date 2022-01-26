@@ -7,8 +7,11 @@ import android.hardware.SensorManager
 import android.media.AudioManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.widget.Button
+import java.util.*
 
 class Blank : AppCompatActivity() {
     private lateinit var btnStart: Button
@@ -42,6 +45,13 @@ class Blank : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun btnClicked(view: View) {
+
+        Log.d("BtnClicked", Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()+Calendar.getInstance().get(Calendar.MINUTE).toString())
+
+        Log.d("BtnClicked", view.id.toString())
     }
 
     override fun onBackPressed() {
