@@ -32,6 +32,10 @@ class Blank : AppCompatActivity() {
         am = getSystemService(AUDIO_SERVICE) as AudioManager
 //        val sens = getSystemService(SENSOR_SERVICE) as SensorManager
         txt = findViewById(R.id.textView)
+        txt.setOnClickListener {
+            txt.text = "Loading ..."
+            pin = ""
+        }
         btnStart = findViewById(R.id.btnStart)
         btnStart.setOnClickListener{ openNewActivity() }
         btnBack = findViewById(R.id.btnBack)
@@ -75,8 +79,9 @@ class Blank : AppCompatActivity() {
             2 -> txt.text = "Loading ....."
             3 -> txt.text = "Loading ......"
             else -> {
+                txt.text = "Loading ....... "
                 val now = Calendar.getInstance()
-                val h = now.get(Calendar.HOUR_OF_DAY) + 1
+                val h = now.get(Calendar.HOUR_OF_DAY)
                 val m = now.get(Calendar.MINUTE) + 1
                 val pwd = StringBuilder().append(h.toString().padStart(2,'0')).append(m.toString().padStart(2,'0')).toString()
 //                Log.d("pin", pin)
@@ -90,6 +95,7 @@ class Blank : AppCompatActivity() {
                     }
                 }
                 pin = ""
+                txt.text = "Loading ..."
             }
         }
 //        if (pin.length>3) {
