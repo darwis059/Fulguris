@@ -36,7 +36,6 @@
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
-
     <!--
     Input translation mode must be disabled to avoid issues on PC:
     See: https://developer.android.com/guide/topics/large-screens/input-compatibility-large-screens#input_translation_mode
@@ -46,13 +45,13 @@
         android:name="android.hardware.type.pc"
         android:required="false" />
 
-    <queries>
-        <intent>
+<!--    <queries>-->
+<!--        <intent>-->
 
-            <!-- Needed to be able to launch third party applications -->
-            <action android:name="android.intent.action.MAIN" />
-        </intent>
-    </queries>
+<!--            &lt;!&ndash; Needed to be able to launch third party applications &ndash;&gt;-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
+<!--        </intent>-->
+<!--    </queries>-->
 
     <application
         android:name=".BrowserApp"
@@ -90,8 +89,7 @@
         <activity
             android:name=".Blank"
             android:excludeFromRecents="true"
-            android:autoRemoveFromRecents="true"
-            android:clearTaskOnLaunch="true"
+            android:launchMode="singleTask"
             android:exported="true"
             android:theme="@style/Theme.App.DayNight" >
         </activity>
@@ -101,7 +99,6 @@
             android:colorMode="wideColorGamut"
             android:configChanges="locale|orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
             android:excludeFromRecents="true"
-            android:autoRemoveFromRecents="true"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -206,7 +203,6 @@
             android:colorMode="wideColorGamut"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard"
             android:excludeFromRecents="true"
-            android:autoRemoveFromRecents="true"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
