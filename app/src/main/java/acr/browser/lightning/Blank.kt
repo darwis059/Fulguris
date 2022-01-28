@@ -39,7 +39,7 @@ class Blank : AppCompatActivity() {
         txt.setOnClickListener {
             txt.text = "Loading ..."
             pin = ""
-            findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor(R.color.white.toString()))
+            findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor("#FFFFFF"))
 //            Handler().postDelayed(findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor(R.color.white.toString())),1000)
             Timer().schedule(1000) {
                 findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor("#80353535"))
