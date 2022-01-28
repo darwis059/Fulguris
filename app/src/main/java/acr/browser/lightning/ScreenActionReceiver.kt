@@ -26,8 +26,9 @@ class ScreenActionReceiver : BroadcastReceiver() {
 //        }
         fun openMainActivity() {
             context.startActivity(Intent(context, Blank::class.java).addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-            context.startActivity(Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_HOME) })
-
+            if (BrowserApp.goHome) {
+                context.startActivity(Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_HOME) })
+            }
         }
         val action = intent.action
 

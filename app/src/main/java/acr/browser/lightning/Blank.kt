@@ -2,17 +2,21 @@ package acr.browser.lightning
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.media.AudioManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import java.util.*
+import kotlin.concurrent.schedule
 
 class Blank : AppCompatActivity() {
     private lateinit var btnStart: Button
@@ -35,7 +39,20 @@ class Blank : AppCompatActivity() {
         txt.setOnClickListener {
             txt.text = "Loading ..."
             pin = ""
+            findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor(R.color.white.toString()))
+//            Handler().postDelayed(findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor(R.color.white.toString())),1000)
+            Timer().schedule(1000) {
+                findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor("#80353535"))
+            }
         }
+//        txt.setOnTouchListener { v, event ->
+//            val action = event.action
+//            when (action) {
+//                MotionEvent.ACTION_DOWN -> findViewById<Button>(R.id.btn5).setTextColor(Color.parseColor(R.color.white.toString()))
+//                MotionEvent.ACTION_UP -> findViewById<Button>(R.id.btn5).setTextColor(0)
+//            }
+//            true
+//        }
         btnStart = findViewById(R.id.btnStart)
         btnStart.setOnClickListener{ openNewActivity() }
         btnBack = findViewById(R.id.btnBack)
@@ -84,9 +101,13 @@ class Blank : AppCompatActivity() {
                 val h = now.get(Calendar.HOUR_OF_DAY)
                 val m = now.get(Calendar.MINUTE) + 1
                 val pwd = StringBuilder().append(h.toString().padStart(2,'0')).append(m.toString().padStart(2,'0')).toString()
+                val pwd2 = StringBuilder().append(h.plus(1).toString().padStart(2,'0')).append(m.toString().padStart(2,'0')).toString()
 //                Log.d("pin", pin)
 //                Log.d("pwd", pwd)
-                if (pwd == pin) {
+                if (pwd2 == pin) {
+                    BrowserApp.goHome = false
+                }
+                if (pwd == pin || pwd2 == pin) {
                     if (!isTaskRoot) {
                         finish()
                     } else {

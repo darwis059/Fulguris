@@ -178,6 +178,7 @@ class BrowserApp : Application() {
         // Used to track current activity
         var resumedActivity: Activity? = null
         var prevAct: String? = null
+        var goHome: Boolean = true
 
         /**
          * Used to get current activity context in order to access current theme.
